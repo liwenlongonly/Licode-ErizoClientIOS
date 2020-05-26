@@ -52,8 +52,13 @@ typedef void(^SocketIOCallback)(NSArray* data);
     outMessagesQueues = [NSMutableDictionary dictionary];
     streamSignalingDelegates = [[NSMutableDictionary alloc] init];
     BOOL secure = [(NSNumber *)[decodedToken objectForKey:@"secure"] boolValue];
-    NSString *urlString = [NSString stringWithFormat:@"http://%@",
-                           [decodedToken objectForKey:@"host"]];
+    NSString *urlString = nil;
+    NSString *host = [decodedToken objectForKey:@"host"];
+    if(secure){
+        urlString = [NSString stringWithFormat:@"wss://%@",host];
+    }else{
+        urlString = [NSString stringWithFormat:@"ws://%@",host];
+    }
     NSURL *url = [NSURL URLWithString:urlString];
 
     socketIO = [[SocketIOClient alloc] initWithSocketURL:url

@@ -12,7 +12,8 @@
 
 + (instancetype)sharedInstance;
 
-- (void)obtainMultiVideoConferenceToken:(NSString *)username
+- (void)obtainMultiVideoConferenceToken:(NSString *)roomName
+                             userName:(NSString *)username
                              completion:(void(^)(BOOL result, NSString *token))completion;
 
 @end

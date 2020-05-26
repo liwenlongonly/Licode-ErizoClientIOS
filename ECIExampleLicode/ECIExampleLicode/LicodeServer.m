@@ -13,8 +13,7 @@
 	+(void)setAllowsAnyHTTPSCertificate:(BOOL) allow forHost:(NSString*) host;
 @end
 
-static NSString *kLicodeServerURLString = @"https://chotis2.dit.upm.es/token";
-static NSString *kLicodeRoomId = @"57ced7acb831f12276f1afcc";
+static NSString *kLicodeServerURLString = @"http://114.116.234.90:3001/createToken/";
 static NSString *kLicodeServerTokenJSONNameSpace = @"";
 static NSString *kLicodeServerTokenJSONField = @"";
 
@@ -29,11 +28,13 @@ static NSString *kLicodeServerTokenJSONField = @"";
     return sharedInstance;
 }
 
-- (void)obtainMultiVideoConferenceToken:(NSString *)username completion:(void (^)(BOOL, NSString *))completion {
+- (void)obtainMultiVideoConferenceToken:(NSString *)roomName
+                               userName:(NSString *)username
+                             completion:(void (^)(BOOL, NSString *))completion {
 	NSDictionary *postData = @{
 							   @"mediaConfiguration": @"default",
 							   @"role": @"presenter",
-							   @"room": @"basicExampleRoom",
+							   @"room": roomName,
 							   @"type": @"erizo",
 							   @"username": username
 							   };

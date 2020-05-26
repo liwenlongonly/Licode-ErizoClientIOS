@@ -14,8 +14,7 @@
 #import "Nuve.h"
 #import "ErizoClient.h"
 
-static NSString *roomId = @"59de889a35189661b58017a1";
-static NSString *roomName = @"IOS Demo APP";
+static NSString *roomName = @"12345";
 static NSString *kDefaultUserName = @"ErizoIOS";
 
 // Remote video view size
@@ -187,28 +186,29 @@ static CGFloat vHeight = 120.0;
     // Initialize room (without token!)
     remoteRoom = [[ECRoom alloc] initWithDelegate:self
                                    andPeerFactory:[[RTCPeerConnectionFactory alloc] init]];
-
+ 
     /*
-
     Method 1: Chotis example:
     =========================
-
+    
     Obtains a token from official Licode demo servers.
     This method is useful if you don't have a custom Licode deployment and
     want to try it. Keep in mind that many times demo servers are down or
     with self-signed or expired certificates.
     You might need to update room ID on LicodeServer.m file.
-
-    [[LicodeServer sharedInstance] obtainMultiVideoConferenceToken:username
-            completion:^(BOOL result, NSString *token) {
-			if (result) {
-				// Connect with the Room
-				[remoteRoom connectWithEncodedToken:token];
-			} else {
-				[self showCallConnectViews:YES updateStatusMessage:@"Token fetch failed"];
-			}
+    */
+    [[LicodeServer sharedInstance] obtainMultiVideoConferenceToken:roomName
+                                                          userName:username
+                                                        completion:^(BOOL result, NSString *token) {
+                                           if (result) {
+                                               // Connect with the Room
+                                               [remoteRoom connectWithEncodedToken:token];
+                                           } else {
+                                               [self showCallConnectViews:YES updateStatusMessage:@"Token fetch failed"];
+                                           }
     }];
-
+     
+    /*
     Method 2: Connect with Nuve directly without middle server API:
     ===============================================================
 
@@ -236,7 +236,7 @@ static CGFloat vHeight = 120.0;
 
 
     Method 2.2: Create a token for a given room id.
-    */
+    
     [[Nuve sharedInstance] createTokenForRoomId:roomId
                                        username:username
                                            role:kLicodePresenterRole
@@ -248,9 +248,10 @@ static CGFloat vHeight = 120.0;
                                                     updateStatusMessage:@"Error!"];
                                          }
                                      }];
+     */
+    
+    //Method 2.3: Create a Room and then create a Token.
     /*
-    Method 2.3: Create a Room and then create a Token.
-
     [[Nuve sharedInstance] createRoomAndCreateToken:roomName
                                            roomType:RoomTypeMCU
                                            username:username
@@ -262,7 +263,7 @@ static CGFloat vHeight = 120.0;
                                                         updateStatusMessage:@"Error!"];
                                              }
                                          }];
-        */
+     */
 
 }
 
