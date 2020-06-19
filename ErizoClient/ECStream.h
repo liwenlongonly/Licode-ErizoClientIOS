@@ -11,6 +11,7 @@
 #import "Logger.h"
 #import "ECSignalingChannel.h"
 #import "ECSignalingMessage.h"
+#import "ARDCaptureController.h"
 
 static NSString * _Nonnull const kLicodeAudioLabel = @"LCMSa0";
 static NSString * _Nonnull const kLicodeVideoLabel = @"LCMSv0";
@@ -243,4 +244,5 @@ static NSString * _Nonnull const kStreamOptionMuteStream    = @"muteStream";
 /// Default audio contraints.
 @property (readonly) RTCMediaConstraints * _Nullable defaultAudioConstraints;
 
+@property (readonly) ARDCaptureController * _Nullable captureController;
 @end

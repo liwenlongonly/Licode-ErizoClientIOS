@@ -45,6 +45,7 @@
 		78D593741B7C17FF00EDF432 /* SDPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D593651B7C17FF00EDF432 /* SDPUtils.m */; };
 		78D593761B7C17FF00EDF432 /* ECStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D593691B7C17FF00EDF432 /* ECStream.m */; };
 		78D593771B7C17FF00EDF432 /* ECRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5936A1B7C17FF00EDF432 /* ECRoom.m */; };
+		B704A30C249C6F9000820520 /* ARDCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = B704A30B249C6F9000820520 /* ARDCaptureController.m */; };
 		E9D760ED262B5BFE4ADE46C4 /* Pods_ErizoClientTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3077201114BF0658A5460831 /* Pods_ErizoClientTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,8 @@
 		78DD3FB41DF70C1900D139F9 /* ECRoomStatsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECRoomStatsProtocol.h; sourceTree = "<group>"; };
 		78E539CF1B99E4F4004B63EF /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		ABD280C37BE349151236FDEF /* Pods-ErizoClientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErizoClientTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ErizoClientTests/Pods-ErizoClientTests.release.xcconfig"; sourceTree = "<group>"; };
+		B704A30A249C6F9000820520 /* ARDCaptureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARDCaptureController.h; path = rtc/ARDCaptureController.h; sourceTree = "<group>"; };
+		B704A30B249C6F9000820520 /* ARDCaptureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARDCaptureController.m; path = rtc/ARDCaptureController.m; sourceTree = "<group>"; };
 		B916C67F7DBD8F27E3B4F7F5 /* Pods-ErizoClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErizoClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ErizoClient/Pods-ErizoClient.debug.xcconfig"; sourceTree = "<group>"; };
 		C46FE2A8E0D86F786A534622 /* Pods-ErizoClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErizoClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-ErizoClient/Pods-ErizoClient.release.xcconfig"; sourceTree = "<group>"; };
 		C4B56ADE9F6FA9CA5762ACC1 /* Pods-ErizoClientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErizoClientTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ErizoClientTests/Pods-ErizoClientTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 		7863E3231B7C167500A34C50 /* ErizoClient */ = {
 			isa = PBXGroup;
 			children = (
+				B704A30A249C6F9000820520 /* ARDCaptureController.h */,
+				B704A30B249C6F9000820520 /* ARDCaptureController.m */,
 				78D593501B7C17FF00EDF432 /* RTC */,
 				785C801A1B9DE13300DD721F /* ECPlayerView.h */,
 				785C80191B9DE13300DD721F /* ECPlayerView.m */,
@@ -498,6 +503,7 @@
 				78D5936F1B7C17FF00EDF432 /* ECSignalingMessage.m in Sources */,
 				78D593711B7C17FF00EDF432 /* RTCIceCandidate+JSON.m in Sources */,
 				78D593721B7C17FF00EDF432 /* RTCIceServer+JSON.m in Sources */,
+				B704A30C249C6F9000820520 /* ARDCaptureController.m in Sources */,
 				78D593731B7C17FF00EDF432 /* RTCSessionDescription+JSON.m in Sources */,
 				78D5936C1B7C17FF00EDF432 /* ECClient.m in Sources */,
 				78D5936E1B7C17FF00EDF432 /* ECSignalingChannel.m in Sources */,

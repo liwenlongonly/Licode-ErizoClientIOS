@@ -70,9 +70,4 @@ CGRect viewFrame;
     return YES;
 }
 
-# pragma mark - RTCEAGLVideoViewDelegate
-
-- (void)videoView:(RTCEAGLVideoView*)videoView didChangeVideoSize:(CGSize)size {
-}
-
 @end
