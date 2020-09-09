@@ -10,6 +10,7 @@
 #import "ECRoom.h"
 #import "ECStream.h"
 #import "ECCLient.h"
+#import "ErizoClient.h"
 #import "ECClient+Internal.h"
 #import "ECSignalingChannel.h"
 #import "Logger.h"
@@ -29,7 +30,7 @@ static NSString * const kRTCStatsMediaTypeKey    = @"mediaType";
 - (instancetype)init {
     if (self = [super init]) {
         if (!_peerFactory) {
-            _peerFactory = [[RTCPeerConnectionFactory alloc] init];
+            _peerFactory = [ErizoClient getPeerConnectionFactory];
         }
         _recordEnabled = NO;
         _publishingStats = NO;

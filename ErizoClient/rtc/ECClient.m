@@ -53,7 +53,7 @@
 - (instancetype)initWithDelegate:(id<ECClientDelegate>)delegate {
     if (self = [self init]) {
         _delegate = delegate;
-        _factory = [[RTCPeerConnectionFactory alloc] init];
+        _factory = [ErizoClient getPeerConnectionFactory];
     }
     return  self;
 }
@@ -123,9 +123,8 @@
 #
 # pragma mark - Constraints
 #
-
 - (RTCMediaConstraints *)defaultPeerConnectionConstraints {
-    NSDictionary *optionalConstraints = @{@"DtlsSrtpKeyAgreement":@"true"};
+    NSDictionary *optionalConstraints = @{@"DtlsSrtpKeyAgreement":kRTCMediaConstraintsValueTrue};
     RTCMediaConstraints* constraints =
     [[RTCMediaConstraints alloc]
      initWithMandatoryConstraints:nil
@@ -139,8 +138,9 @@
 
 - (RTCMediaConstraints *)defaultOfferConstraints {
     NSDictionary *mandatoryConstraints = @{
-                                      @"OfferToReceiveAudio": @"true",
-                                      @"OfferToReceiveVideo": @"true"
+                                      kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
+                                      kRTCMediaConstraintsOfferToReceiveVideo: kRTCMediaConstraintsValueTrue,
+                                      kRTCMediaConstraintsIceRestart: kRTCMediaConstraintsValueTrue
                                       };
     RTCMediaConstraints* constraints =
     [[RTCMediaConstraints alloc]
@@ -357,6 +357,7 @@ readyToSubscribeStreamId:(NSString *)streamId
     RTCMediaConstraints *constraints = [self defaultPeerConnectionConstraints];
     RTCConfiguration *config = [[RTCConfiguration alloc] init];
     config.iceServers = _iceServers;
+    config.sdpSemantics = RTCSdpSemanticsPlanB;
     _peerConnection = [_factory peerConnectionWithConfiguration:config
                                                     constraints:constraints
                                                        delegate:self];
@@ -416,17 +417,24 @@ readyToSubscribeStreamId:(NSString *)streamId
         case kECSignalingMessageTypeAnswer: {
             ECSessionDescriptionMessage *sdpMessage = (ECSessionDescriptionMessage *)message;
             RTCSessionDescription *description = sdpMessage.sessionDescription;
-            RTCSessionDescription *newSDP =
-                [SDPUtils descriptionForDescription:description
-                                preferredVideoCodec:[[self class] getPreferredVideoCodec]];
             
-            newSDP = [self descriptionForDescription:newSDP bandwidthOptions:_clientOptions];
+            RTCSessionDescription *newSDP = [[RTCSessionDescription alloc]initWithType:description.type sdp:description.sdp];
+//            RTCSessionDescription *newSDP =
+//                [SDPUtils descriptionForDescription:description
+//                                preferredVideoCodec:[[self class] getPreferredVideoCodec]];
+//
+//            newSDP = [self descriptionForDescription:newSDP bandwidthOptions:_clientOptions];
             
             __weak ECClient *weakSelf = self;
+            L_INFO(@"remote description: %@", newSDP);
             [_peerConnection setRemoteDescription:newSDP
                                 completionHandler:^(NSError * _Nullable error) {
-                ECClient *strongSelf = weakSelf;
-                [strongSelf peerConnection:strongSelf.peerConnection didSetSessionDescriptionWithError:error];
+                if(error){
+                     L_ERROR(@"Failed to set remote description: %@", error);
+                }else{
+                    ECClient *strongSelf = weakSelf;
+                    [strongSelf peerConnection:strongSelf.peerConnection didSetSessionDescriptionWithError:error];
+                }
             }];
             break;
         }
@@ -494,11 +502,9 @@ readyToSubscribeStreamId:(NSString *)streamId
         
         C_L_INFO(@"did create a session description!");
         
-        RTCSessionDescription *newSDP =
-                    [SDPUtils descriptionForDescription:sdp
-                                    preferredVideoCodec:[[self class] getPreferredVideoCodec]];
+        RTCSessionDescription *newSDP = [[RTCSessionDescription alloc]initWithType:sdp.type sdp:sdp.sdp];
         
-        newSDP = [self descriptionForDescription:newSDP bandwidthOptions:_clientOptions];
+        //newSDP = [self descriptionForDescription:newSDP bandwidthOptions:_clientOptions];
 
         if (sdpHackCallback) {
             newSDP = sdpHackCallback(newSDP);

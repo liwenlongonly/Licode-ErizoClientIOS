@@ -21,7 +21,7 @@ static NSString *kDefaultUserName = @"ErizoIOS";
 static CGFloat vWidth = 100.0;
 static CGFloat vHeight = 120.0;
 
-@interface MultiConferenceViewController () <UITextFieldDelegate, RTCEAGLVideoViewDelegate>
+@interface MultiConferenceViewController () <UITextFieldDelegate, RTCVideoViewDelegate>
 @end
 
 @implementation MultiConferenceViewController {
@@ -167,9 +167,9 @@ static CGFloat vHeight = 120.0;
 }
 
 # pragma mark - RTCEAGLVideoViewDelegate
-
-- (void)videoView:(RTCEAGLVideoView*)videoView didChangeVideoSize:(CGSize)size {
-	L_INFO(@"Change %p %f %f", videoView, size.width, size.height);
+- (void)videoView:(id<RTC_OBJC_TYPE(RTCVideoRenderer)>)videoView didChangeVideoSize
+                 :(CGSize)size{
+    L_INFO(@"Change %p %f %f", videoView, size.width, size.height);
 }
 
 # pragma mark - UI Actions
@@ -185,7 +185,7 @@ static CGFloat vHeight = 120.0;
 
     // Initialize room (without token!)
     remoteRoom = [[ECRoom alloc] initWithDelegate:self
-                                   andPeerFactory:[[RTCPeerConnectionFactory alloc] init]];
+                                   andPeerFactory:nil];
  
     /*
     Method 1: Chotis example:

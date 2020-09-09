@@ -8,11 +8,12 @@
 
 @import WebRTC;
 #import "ECStream.h"
+#import "ErizoClient.h"
 
 @implementation ECStream
 
 @synthesize signalingChannel = _signalingChannel;
-
+@synthesize captureController = _captureController;
 # pragma mark - Initializers
 
 - (instancetype)init {
@@ -51,7 +52,7 @@
                           videoConstraints:(RTCMediaConstraints *)videoConstraints
                           audioConstraints:(RTCMediaConstraints *)audioConstraints {
     if (self = [self init]) {
-        _peerFactory = [[RTCPeerConnectionFactory alloc] init];
+        _peerFactory = [ErizoClient getPeerConnectionFactory];
         _defaultVideoConstraints = videoConstraints;
         _defaultAudioConstraints = audioConstraints;
         _isLocal = YES;
@@ -173,9 +174,8 @@
 
 - (BOOL)switchCamera {
     RTCVideoSource* source = ((RTCVideoTrack*)[_mediaStream.videoTracks objectAtIndex:0]).source;
-    if ([source isKindOfClass:[RTCAVFoundationVideoSource class]]) {
-        RTCAVFoundationVideoSource* avSource = (RTCAVFoundationVideoSource*)source;
-        avSource.useBackCamera = !avSource.useBackCamera;
+    if (_captureController) {
+        [_captureController switchCamera];
         return YES;
     } else {
         return NO;
@@ -255,9 +255,11 @@
 - (RTCVideoTrack *)createLocalVideoTrack {
     RTCVideoTrack* localVideoTrack = nil;
 #if !TARGET_IPHONE_SIMULATOR && TARGET_OS_IPHONE
-    RTCAVFoundationVideoSource *source =
-    [_peerFactory avFoundationVideoSourceWithConstraints:_defaultVideoConstraints];
+    RTCVideoSource *source = [_peerFactory videoSource];
+    RTCCameraVideoCapturer *capturer = [[RTCCameraVideoCapturer alloc]initWithDelegate:source];
+    _captureController = [[ARDCaptureController alloc]initWithCapturer:capturer];
     localVideoTrack = [_peerFactory videoTrackWithSource:source trackId:kLicodeVideoLabel];
+    [_captureController startCapture:480 H:640];
 #endif
     return localVideoTrack;
 }

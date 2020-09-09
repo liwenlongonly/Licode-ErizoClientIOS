@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@import  WebRTC;
 /**
  @interface ErizoClient
  
@@ -28,5 +29,10 @@
  
  */
 + (instancetype)sharedInstance;
+
+
++ (RTCPeerConnectionFactory *)getPeerConnectionFactory;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
