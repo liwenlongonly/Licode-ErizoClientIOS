@@ -167,7 +167,7 @@ static CGFloat vHeight = 120.0;
 }
 
 # pragma mark - RTCEAGLVideoViewDelegate
-- (void)videoView:(id<RTC_OBJC_TYPE(RTCVideoRenderer)>)videoView didChangeVideoSize
+- (void)videoView:(id<RTCVideoRenderer>)videoView didChangeVideoSize
                  :(CGSize)size{
     L_INFO(@"Change %p %f %f", videoView, size.width, size.height);
 }

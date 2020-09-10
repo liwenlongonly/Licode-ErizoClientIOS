@@ -6,7 +6,6 @@
 //  MIT License, see LICENSE file for details.
 //
 
-@import WebRTC;
 #import "ErizoClient.h"
 #import "rtc/ECClient.h"
 
@@ -32,12 +31,12 @@
     static RTCPeerConnectionFactory* _instance = nil;
     dispatch_once(&onceToken, ^{
         if(_instance==nil){
-            RTC_OBJC_TYPE(RTCDefaultVideoDecoderFactory) *decoderFactory =
-                [[RTC_OBJC_TYPE(RTCDefaultVideoDecoderFactory) alloc] init];
-            RTC_OBJC_TYPE(RTCDefaultVideoEncoderFactory) *encoderFactory =
-                [[RTC_OBJC_TYPE(RTCDefaultVideoEncoderFactory) alloc] init];
-            NSArray<RTC_OBJC_TYPE(RTCVideoCodecInfo) *> *codecs = [RTC_OBJC_TYPE(RTCDefaultVideoEncoderFactory) supportedCodecs];
-            for (RTC_OBJC_TYPE(RTCVideoCodecInfo) * codec in codecs) {
+            RTCDefaultVideoDecoderFactory *decoderFactory =
+                [[RTCDefaultVideoDecoderFactory alloc] init];
+            RTCDefaultVideoEncoderFactory *encoderFactory =
+                [[RTCDefaultVideoEncoderFactory alloc] init];
+            NSArray<RTCVideoCodecInfo *> *codecs = [RTCDefaultVideoEncoderFactory supportedCodecs];
+            for (RTCVideoCodecInfo * codec in codecs) {
                 if([codec.name isEqualToString:@"VP8"]){
                     encoderFactory.preferredCodec = codec;
                 }
