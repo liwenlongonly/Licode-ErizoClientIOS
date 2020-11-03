@@ -14,7 +14,7 @@
 #import "Nuve.h"
 #import "ErizoClient.h"
 
-static NSString *roomName = @"12345";
+static NSString *roomName = @"123456";
 static NSString *kDefaultUserName = @"ErizoIOS";
 
 // Remote video view size

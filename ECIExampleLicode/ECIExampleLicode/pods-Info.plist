@@ -23,10 +23,12 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+    <dict>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <true/>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Broadcast from your camera</string>
 	<key>NSMicrophoneUsageDescription</key>
